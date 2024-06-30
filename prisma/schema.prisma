@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model administrador {
+  id Int     @id @default(autoincrement())
+  nombre           String  @db.VarChar(50)
+  correo           String? @unique(map: "correo") @db.VarChar(50)
+  contrasena       String  @db.VarChar(50)
+}
+
+model asignacion {
+  anio            Int       @db.Year
+  id_unidad       Int
+  id_criterio     Int
+  id_indicador    Int
+  recomendado     Boolean   @default(false)
+  doc_respuesta   String?   @db.VarChar(255)
+  fecha_respuesta DateTime? @db.Date
+  completado      Boolean   @default(false)
+  unidad          unidad    @relation(fields: [id_unidad], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_1")
+  criterio        criterio  @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_2")
+  indicador       indicador @relation(fields: [id_indicador], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_3")
+
+  @@id([id_unidad, id_criterio, id_indicador, anio])
+  @@index([id_criterio], map: "id_criterio")
+  @@index([id_indicador], map: "id_indicador")
+}
+
+model criterio {
+  id Int          @id
+  nombre      String       @db.VarChar(50)
+  descripcion String       @db.VarChar(255)
+  estado      Boolean      @default(true)
+  asignacion  asignacion[]
+  indicador   indicador[]
+}
+
+model indicador {
+  id Int          @id
+  id_criterio  Int
+  nombre       String       @db.VarChar(50)
+  descripcion  String?      @db.VarChar(255)
+  doc_pregunta String?      @db.VarChar(255)
+  estado       Boolean      @default(true)
+  asignacion   asignacion[]
+  criterio     criterio     @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "indicador_ibfk_1")
+
+  @@index([id_criterio], map: "id_criterio")
+}
+
+model unidad {
+  id   Int          @id @default(autoincrement())
+  nombre      String       @unique(map: "nombre") @db.VarChar(50)
+  responsable String       @db.VarChar(50)
+  correo      String       @db.VarChar(50)
+  contrasena  String       @db.VarChar(50)
+  estado      Boolean      @default(true)
+  asignacion  asignacion[]
+}
