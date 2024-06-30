@@ -7,6 +7,12 @@ export class AdministradorController {
 
     constructor(private administradorService: AdministradorService) {}
 
+    @Get('/prueba')
+    getAllTasks() {
+        return 'EL MODULO DE ADMINISTRADOR FUNCIONA CORRECTAMENTE';
+    }
+
+
     @Get('/admin')
     getAdministradores() {
         return this.administradorService.getAdministradores();
