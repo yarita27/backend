@@ -43,14 +43,15 @@ model criterio {
 
 model indicador {
   id_criterio  Int
-  id           Int          @id
+  id           Int
   nombre       String       @db.VarChar(50)
   descripcion  String?      @db.VarChar(255)
   doc_pregunta String?      @db.VarChar(255)
   estado       Boolean      @default(true)
   asignacion   asignacion[]
   criterio     criterio     @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "indicador_ibfk_1")
-
+  
+  @@id([id_criterio, id])
   @@index([id_criterio], map: "id_criterio")
 }
 
