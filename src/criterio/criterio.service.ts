@@ -20,6 +20,20 @@ export class CriterioService {
         return this.prisma.criterio.create({ data: criterio });
     }
 
+    updateCriterio(id: number, criterio: Criterio) {
+        return this.prisma.criterio.update({
+            where: { id: id },
+            data: criterio
+        });
+    }
+
+    updateEstadoCriterio(id: number, estado: boolean) {
+        return this.prisma.criterio.update({
+            where: { id: id },
+            data: { estado: estado }
+        });
+    }
+
     deleteCriterio(id: number) {
         return this.prisma.criterio.delete({ where: { id: id } });
     }

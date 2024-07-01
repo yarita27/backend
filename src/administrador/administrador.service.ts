@@ -21,9 +21,22 @@ export class AdministradorService {
         return this.prisma.administrador.create({ data: admin });
     }
 
+    updateAdministrador(id: number , admin: Administrador) {
+        return this.prisma.administrador.update({ 
+            where: { id: id }, 
+            data: admin
+        });
+    }
+
     deleteAdministrador(id: number) {
-        console.log(id);
         return this.prisma.administrador.delete({ where: { id: id } });
+    }
+
+    updateAdministradorPass(id: number, pass : string) {
+        return this.prisma.administrador.update({
+            where: { id: id },
+            data: { contrasena: pass }
+        });
     }
 }
 

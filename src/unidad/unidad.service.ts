@@ -24,6 +24,20 @@ export class UnidadService {
         });
     }
 
+    updateUnidad(id: number, unidad: Unidad) {
+        return this.prisma.unidad.update({
+            where: {id: id},
+            data: unidad
+        });
+    }
+
+    updateEstadoUnidad(id: number, estado: boolean) {
+        return this.prisma.unidad.update({
+            where: {id: id},
+            data: {estado: estado}
+        });
+    }
+
     deleteUnidad(id: number) {
         return this.prisma.unidad.delete({
             where: {id: id}

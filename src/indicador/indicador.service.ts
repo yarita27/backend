@@ -8,7 +8,6 @@ export interface Indicador {
     descripcion: string;
     doc_pregunta: string;
     estado: boolean;
-
 }
 
 @Injectable()
@@ -23,7 +22,22 @@ export class IndicadorService {
         return this.prisma.indicador.create({ data: indicador });
     }
 
-    deleteIndicador(id_criterio: number, id: number) {
+    updateIndicador(id_criterio: number, id: number, indicador: Indicador) {
+        return this.prisma.indicador.update({
+            where: { id_criterio: id_criterio, id: id },
+            data: indicador
+        });
+    }
+
+    updateEstadoIndicador(id_criterio: number, id: number, estado: boolean) {
+        return this.prisma.indicador.update({
+            where: { id_criterio: id_criterio, id: id },
+            data: { estado: estado }
+        });
+    }
+
+
+    deleteIndicador(id_criterio: number, id: number) {     
         return this.prisma.indicador.delete({ where: { id_criterio: id_criterio , id: id } });
     }
     

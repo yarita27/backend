@@ -1,4 +1,4 @@
-import { Controller,Body, Get, Post, Delete } from '@nestjs/common';
+import { Controller,Body, Get, Post, Delete, Put, Patch } from '@nestjs/common';
 import { CriterioService } from './criterio.service';
 
 @Controller('criterio')
@@ -14,6 +14,16 @@ export class CriterioController {
     @Post()
     createCriterio(@Body() criterio: any){
         return this.criterioService.createCriterio(criterio);
+    }
+
+    @Put()
+    updateCriterio(@Body() body : {id:number, criterio: any} ) {
+        return this.criterioService.updateCriterio(body.id,body.criterio);
+    }
+
+    @Patch()
+    updateEstadoCriterio(@Body() body : {id:number, estado: boolean} ) {
+        return this.criterioService.updateEstadoCriterio(body.id,body.estado);
     }
 
     @Delete()

@@ -21,7 +21,7 @@ model asignacion {
   id_indicador    Int
   recomendado     Boolean   @default(false)
   doc_respuesta   String?   @db.VarChar(255)
-  fecha_respuesta DateTime? @db.Date
+  fecha_respuesta Date? @db.Date
   completado      Boolean   @default(false)
   unidad          unidad    @relation(fields: [id_unidad], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_1")
   criterio        criterio  @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_2")
@@ -30,6 +30,7 @@ model asignacion {
   @@id([id_unidad, id_criterio, id_indicador, anio])
   @@index([id_criterio], map: "id_criterio")
   @@index([id_indicador], map: "id_indicador")
+  @@index([id_unidad], map: "id_unidad")
 }
 
 model criterio {

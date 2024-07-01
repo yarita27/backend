@@ -21,8 +21,8 @@ export class AdministradorController {
     }
 
     @Put()
-    updateAdmin() {
-        return 'actualizando admin';
+    updateAdmin(@Body() body : {id:number, admin: any} ) {
+        return this.administradorService.updateAdministrador(body.id,body.admin);
     }
 
     @Delete()
@@ -31,7 +31,7 @@ export class AdministradorController {
     }
 
     @Patch()
-    updateAdminStatus() {
-        return 'actualizando estado de admin';
+    updateAdminPass(@Body() body : {id:number, contrasena:string} ) {
+        return this.administradorService.updateAdministradorPass(body.id,body.contrasena);
     }
 }
