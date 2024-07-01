@@ -41,6 +41,20 @@ export class AsignacionService {
         });
     }
 
+    updateRecomendadoAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number, recomendado: boolean) {
+        return this.prismaService.asignacion.update({
+            where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } },
+            data: { recomendado: recomendado }
+        });
+    }
+
+    updateDocRespuestaAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number, doc_respuesta: string) {
+        return this.prismaService.asignacion.update({
+            where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } },
+            data: { doc_respuesta: doc_respuesta , fecha_respuesta: new Date()}
+        });
+    }
+
     deleteAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number) {
         return this.prismaService.asignacion.delete({
             where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } }

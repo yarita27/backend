@@ -1,10 +1,13 @@
 import { Body, Controller, Delete, Get, Post, Put ,Patch} from '@nestjs/common';
 import { IndicadorService } from './indicador.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('indicador')
+@ApiTags('Indicador')
 export class IndicadorController {
     constructor(private indicadorService: IndicadorService) {}
 
+    
     @Get()
     getIndicadores() {
         return this.indicadorService.getIndicadores();

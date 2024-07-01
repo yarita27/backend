@@ -1,11 +1,14 @@
 import { Controller,Body, Get, Post, Delete, Put, Patch } from '@nestjs/common';
 import { CriterioService } from './criterio.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('criterio')
+@ApiTags('Criterio')
 export class CriterioController {
 
     constructor(private criterioService: CriterioService) {}
 
+    
     @Get()
     getCriterios() {
         return this.criterioService.getCriterios();

@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
 import { UnidadService } from './unidad.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/unidad')
+@ApiTags('Unidad')
 export class UnidadController {
 
     constructor(private unidadService: UnidadService) {}
