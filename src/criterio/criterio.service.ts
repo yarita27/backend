@@ -16,6 +16,10 @@ export class CriterioService {
         return this.prisma.criterio.findMany();
     }
 
+    criteriosActivos() {
+        return this.prisma.criterio.findMany({ where: { estado: true } });
+    }
+
     createCriterio(criterio: Criterio) {
         return this.prisma.criterio.create({ data: criterio });
     }

@@ -14,6 +14,11 @@ export class CriterioController {
         return this.criterioService.getCriterios();
     }
 
+    @Get('activos')
+    criteriosActivos() {
+        return this.criterioService.criteriosActivos();
+    }
+
     @Post()
     createCriterio(@Body() criterio: any){
         return this.criterioService.createCriterio(criterio);

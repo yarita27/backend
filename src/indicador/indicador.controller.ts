@@ -13,6 +13,11 @@ export class IndicadorController {
         return this.indicadorService.getIndicadores();
     }
 
+    @Get('activos')
+    indicadoresActivos(){
+        return this.indicadorService.indicadoresActivos();
+    }
+
     @Post()
     createIndicador(@Body() indicador: any){
         return this.indicadorService.createIndicador(indicador);

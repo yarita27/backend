@@ -18,6 +18,10 @@ export class IndicadorService {
         return this.prisma.indicador.findMany();
     }
 
+    indicadoresActivos(){
+        return this.prisma.indicador.findMany({ where: { estado: true } });
+    };
+
     createIndicador(indicador: Indicador) {
         return this.prisma.indicador.create({ data: indicador });
     }
