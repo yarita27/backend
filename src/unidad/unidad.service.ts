@@ -18,6 +18,10 @@ export class UnidadService {
         return this.prisma.unidad.findMany();
     }
 
+    unidadesActivas(){
+        return this.prisma.unidad.findMany({ where: { estado: true } });
+    }
+
     createUnidad(unidad : Unidad) {
         return this.prisma.unidad.create({
             data: unidad

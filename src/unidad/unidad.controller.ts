@@ -13,6 +13,11 @@ export class UnidadController {
         return this.unidadService.getUnidades();
     }
 
+    @Get('activos')
+    unidadesActivas(){
+        return this.unidadService.unidadesActivas();
+    }
+    
     @Post()
     createUnidad(@Body() unidad: any){
         return this.unidadService.createUnidad(unidad);
