@@ -21,24 +21,22 @@ model asignacion {
   id_indicador    Int
   recomendado     Boolean   @default(false)
   doc_respuesta   String?   @db.VarChar(255)
-  fecha_respuesta Date? @db.Date
+  fecha_respuesta DateTime? @db.Date
   completado      Boolean   @default(false)
   unidad          unidad    @relation(fields: [id_unidad], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_1")
-  criterio        criterio  @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_2")
-  indicador       indicador @relation(fields: [id_indicador], references: [id], onUpdate: Restrict, map: "asignacion_ibfk_3")
+  indicador       indicador @relation(fields: [id_indicador, id_criterio], references: [id, id_criterio], map: "asignacion_ibfk_3")
 
   @@id([id_unidad, id_criterio, id_indicador, anio])
+  @@index([id_indicador, id_criterio], map: "asignacion_ibfk_3_idx")
   @@index([id_criterio], map: "id_criterio")
-  @@index([id_indicador], map: "id_indicador")
   @@index([id_unidad], map: "id_unidad")
 }
 
 model criterio {
-  id          Int          @id
-  nombre      String       @db.VarChar(50)
-  descripcion String       @db.VarChar(255)
-  estado      Boolean      @default(true)
-  asignacion  asignacion[]
+  id          Int         @id
+  nombre      String      @db.VarChar(50)
+  descripcion String      @db.VarChar(255)
+  estado      Boolean     @default(true)
   indicador   indicador[]
 }
 
@@ -51,8 +49,8 @@ model indicador {
   estado       Boolean      @default(true)
   asignacion   asignacion[]
   criterio     criterio     @relation(fields: [id_criterio], references: [id], onUpdate: Restrict, map: "indicador_ibfk_1")
-  
-  @@id([id_criterio, id])
+
+  @@id([id, id_criterio])
   @@index([id_criterio], map: "id_criterio")
 }
 
