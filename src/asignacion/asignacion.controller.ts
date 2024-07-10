@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { AsignacionService } from './asignacion.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -8,9 +8,41 @@ export class AsignacionController {
     constructor(private asignacionService: AsignacionService) {}
 
     
-    @Get()
+    @Get('all')
     getAsignaciones() {
         return this.asignacionService.getAsignaciones();
+    }
+
+    @Get(':anio')
+    getAsignacionesByAnio(@Param('anio') anio: string) {
+        const anioNumber = parseInt(anio, 10);
+        if (isNaN(anioNumber)) {
+            throw new BadRequestException('Invalid year parameter');
+        }
+        return this.asignacionService.getAsignacionesByAnio(anioNumber);
+    }
+
+    @Get('/anios/actuales')
+    getAniosAsignados() {
+        return this.asignacionService.getAniosAsignados();
+    }
+
+    @Get('indicadores/:anio')
+    getIndicadoresByAnio(@Param('anio') anio: string) {
+        const anioNumber = parseInt(anio, 10);
+        if (isNaN(anioNumber)) {
+            throw new BadRequestException('Invalid year parameter');
+        }
+        return this.asignacionService.getIndicadoresByAnio(anioNumber);
+    }
+
+    @Get('unidades/:anio')
+    getUnidadesByAnio(@Param('anio') anio: string) {
+        const anioNumber = parseInt(anio, 10);
+        if (isNaN(anioNumber)) {
+            throw new BadRequestException('Invalid year parameter');
+        }
+        return this.asignacionService.getUnidadesByAnio(anioNumber);
     }
 
     @Post()
