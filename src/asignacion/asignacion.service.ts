@@ -90,6 +90,18 @@ export class AsignacionService {
         return this.prismaService.asignacion.create({ data: asignacion });
     }
 
+    async guardarMatriz(asignaciones: Asignacion[]): Promise<void> {
+        const updatePromises = asignaciones.map(asignacion => {
+            const { id_unidad, id_criterio, id_indicador, anio } = asignacion;
+            return this.prismaService.asignacion.update({
+                where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } },
+                data: { recomendado: asignacion.recomendado }
+            });
+        });
+    
+        await Promise.all(updatePromises);
+    }
+
     updateAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number, asignacion: Asignacion) {
         return this.prismaService.asignacion.update({
             where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } },

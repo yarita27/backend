@@ -1,5 +1,5 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { AsignacionService } from './asignacion.service';
+import { Asignacion, AsignacionService } from './asignacion.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('asignacion')
@@ -48,6 +48,11 @@ export class AsignacionController {
     @Post()
     createAsignacion(@Body() asignacion: any) {
         return this.asignacionService.createAsignacion(asignacion);
+    }
+
+    @Put('matriz')
+    guardarMatriz(@Body() asignaciones : Asignacion[]){
+        return this.asignacionService.guardarMatriz(asignaciones);
     }
 
     @Put()
