@@ -86,6 +86,10 @@ export class AsignacionService {
         return unidades;
     }
 
+    registrarMatrizAsignaciones(asignaciones: Asignacion[]) {
+        return this.prismaService.asignacion.createMany({ data: asignaciones });
+    }
+
     createAsignacion(asignacion: Asignacion) {
         return this.prismaService.asignacion.create({ data: asignacion });
     }

@@ -50,6 +50,11 @@ export class AsignacionController {
         return this.asignacionService.createAsignacion(asignacion);
     }
 
+    @Post('matriz')
+    registrarMatrizAsignaciones(@Body() asignaciones: Asignacion[]) {
+        return this.asignacionService.registrarMatrizAsignaciones(asignaciones);
+    }
+
     @Put('matriz')
     guardarMatriz(@Body() asignaciones : Asignacion[]){
         return this.asignacionService.guardarMatriz(asignaciones);
