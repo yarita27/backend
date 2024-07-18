@@ -79,13 +79,8 @@ export class AsignacionController {
     }
 
     @Put()
-    updateAsignacion(@Body() body : {anio: number, id_unidad: number, id_criterio: number, id_indicador: number, asignacion: any} ) {
-        return this.asignacionService.updateAsignacion(
-            body.anio, 
-            body.id_unidad, 
-            body.id_criterio, 
-            body.id_indicador,
-            body.asignacion);
+    updateAsignacion(@Body() asignacion: Asignacion) {
+        return this.asignacionService.updateAsignacion(asignacion);
     }
 
     @Patch('/estado')
