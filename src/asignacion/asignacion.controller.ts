@@ -55,6 +55,9 @@ export class AsignacionController {
         return this.asignacionService.registrarMatrizAsignaciones(asignaciones);
     }
 
+    //@Post('duplicar/:anio')
+    //duplicarMatrizByAnio
+
     @Put('matriz')
     guardarMatriz(@Body() asignaciones : Asignacion[]){
         return this.asignacionService.guardarMatriz(asignaciones);
@@ -113,5 +116,13 @@ export class AsignacionController {
         );
     }
 
+    @Delete('matriz/:anio')
+    deleteMatrizByAnio(@Param('anio') anio: string) {
+        const anioNumber = parseInt(anio, 10);
+    if (isNaN(anioNumber)) {
+        throw new BadRequestException('Invalid year parameter');
+    }
+        return this.asignacionService.deleteMatrizByAnio(anioNumber);
+    }
 
 }

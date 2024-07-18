@@ -140,6 +140,12 @@ export class AsignacionService {
         });
     }
 
+    deleteMatrizByAnio(anio: number){
+        return this.prismaService.asignacion.deleteMany({
+            where: {anio : anio}
+        });
+    }
+
     getAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number) {
         return this.prismaService.asignacion.findUnique({
             where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad, id_criterio, id_indicador, anio } }
