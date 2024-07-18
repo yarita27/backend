@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { get } from 'http';
 import { PrismaService } from 'src/prisma.service';
 import { Unidad } from 'src/unidad/unidad.service';
+import { getYear as getYearFromFns } from 'date-fns/getYear';
+
 
 export interface Asignacion {
     anio: number;
@@ -86,6 +89,59 @@ export class AsignacionService {
         return unidades;
     }
 
+    async duplicarMatrizByAnio(anio: number): Promise<void> {
+        // Obtener todas las asignaciones del año especificado
+        const asignaciones = await this.prismaService.asignacion.findMany({
+          where: { anio },
+        });
+    
+        // Crear nuevas asignaciones para el año actual
+        const anioActual = getYear(new Date());
+        const nuevasAsignaciones = asignaciones.map(asignacion => ({
+          ...asignacion,
+          anio: anioActual,
+        }));
+    
+        await this.prismaService.asignacion.createMany({
+          data: nuevasAsignaciones,
+        });
+    }
+
+async duplicarMatrizExistente(anio: number): Promise<void> {
+    // Obtener todas las asignaciones del año especificado
+    const asignacionesAnioAnterior = await this.prismaService.asignacion.findMany({
+      where: { anio },
+    });
+
+    // Obtener todas las asignaciones del año actual
+    const anioActual = getYear(new Date());
+    const asignacionesAnioActual = await this.prismaService.asignacion.findMany({
+      where: { anio: anioActual },
+    });
+
+    // Crear un mapa de asignaciones del año anterior por algún identificador único
+    const asignacionesMap = new Map(asignacionesAnioAnterior.map(asignacion => [`${asignacion.id_unidad}-${asignacion.id_criterio}-${asignacion.id_indicador}`, asignacion]));
+
+    // Actualizar las asignaciones del año actual con los valores de recomendado del año anterior
+    for (const asignacionActual of asignacionesAnioActual) {
+    const asignacionAnterior = asignacionesMap.get(asignacionActual.anio.toString());
+      if (asignacionAnterior) {
+        await this.prismaService.asignacion.update({
+          where: { 
+            id_unidad_id_criterio_id_indicador_anio: {
+              id_unidad: asignacionActual.id_unidad,
+              id_criterio: asignacionActual.id_criterio,
+              id_indicador: asignacionActual.id_indicador,
+              anio: asignacionActual.anio
+            }
+          },
+          data: { recomendado: asignacionAnterior.recomendado },
+        });
+      }
+    }
+  }
+
+
     registrarMatrizAsignaciones(asignaciones: Asignacion[]) {
         return this.prismaService.asignacion.createMany({ data: asignaciones });
     }
@@ -154,3 +210,7 @@ export class AsignacionService {
 
 
 }
+function getYear(arg0: Date): number {
+    return arg0.getFullYear();
+}
+
