@@ -162,15 +162,15 @@ async duplicarMatrizExistente(anio: number): Promise<void> {
         await Promise.all(updatePromises);
     }
 
-    /*
+    
     updateAsignacion(asignacion: Asignacion) {
         return this.prismaService.asignacion.update({
             where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad: asignacion.id_unidad, id_criterio: asignacion.id_criterio, id_indicador: asignacion.id_indicador, anio: asignacion.anio } },
             data: asignacion
         });
     }
-    */
- 
+    
+ /*
         updateAsignacion(asignacion: Asignacion) {
         return this.prismaService.asignacion.update({
             where: { id_unidad_id_criterio_id_indicador_anio: { id_unidad: asignacion.id_unidad, id_criterio: asignacion.id_criterio, id_indicador: asignacion.id_indicador, anio: asignacion.anio } },
@@ -181,7 +181,7 @@ async duplicarMatrizExistente(anio: number): Promise<void> {
             }
         });
     }
-    
+    */
     
     updateEstadoAsignacion(anio: number, id_unidad: number, id_criterio: number, id_indicador: number, completado: boolean) {
         return this.prismaService.asignacion.update({
