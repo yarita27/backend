@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { UnidadService } from './unidad.service';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('/unidad')
+@Controller('unidad')
 @ApiTags('Unidad')
 export class UnidadController {
 
@@ -16,7 +16,20 @@ export class UnidadController {
     @Get('activos')
     unidadesActivas(){
         return this.unidadService.unidadesActivas();
+    }   
+    
+    
+    @Get('/:id')
+    getUnidadById(@Param('id') id: string) {
+        const idNumber = parseInt(id, 10);
+        if (isNaN(idNumber)) {
+            throw new BadRequestException('Invalid id parameter');
+        }
+        return this.unidadService.getUnidadById(idNumber);
     }
+
+
+    
     
     @Post()
     createUnidad(@Body() unidad: any){

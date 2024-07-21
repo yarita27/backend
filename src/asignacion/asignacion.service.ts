@@ -49,6 +49,13 @@ export class AsignacionService {
         return aniosUnicos;
     }
 
+    getAsignacionesByAnioUnidad(anio: number, id_unidad: number) {
+        return this.prismaService.asignacion.findMany({
+            where: { anio : anio, id_unidad : id_unidad }
+        });
+
+    }
+
     async getIndicadoresByAnio(anio: number) {
         // Paso 1: Obtener todas las asignaciones del año especificado
         const asignaciones = await this.prismaService.asignacion.findMany({

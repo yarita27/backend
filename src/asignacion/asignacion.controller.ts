@@ -27,6 +27,16 @@ export class AsignacionController {
         return this.asignacionService.getAniosAsignados();
     }
 
+    @Get('asignaciones/:anio/:id_unidad')
+    getAsignacionesByAnioUnidad(@Param('anio') anio: string, @Param('id_unidad') id_unidad: string) {
+        const anioNumber = parseInt(anio, 10);
+        const idUnidadNumber = parseInt(id_unidad, 10);
+        if (isNaN(anioNumber) || isNaN(idUnidadNumber)) {
+            throw new BadRequestException('Invalid year or id_unidad parameter');
+        }
+        return this.asignacionService.getAsignacionesByAnioUnidad(anioNumber, idUnidadNumber);
+    }
+
     @Get('indicadores/:anio')
     getIndicadoresByAnio(@Param('anio') anio: string) {
         const anioNumber = parseInt(anio, 10);
